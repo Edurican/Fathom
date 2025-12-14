@@ -1,0 +1,62 @@
+name: Update README
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+jobs:
+  update:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Update presentation table
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const pr = context.payload.pull_request;
+            
+            // PR 제목 파싱: [week01] 홍길동 - Spring Batch
+            const match = pr.title.match(/\[week(\d+)\]\s*(\S+)\s*-\s*(.+)/i);
+            if (!match) {
+              console.log('PR 제목이 컨벤션과 맞지 않음, 스킵');
+              return;
+            }
+            
+            const [, week, author, topic] = match;
+            const date = new Date().toLocaleDateString('ko-KR', {
+              month: '2-digit',
+              day: '2-digit'
+            }).replace('. ', '-').replace('.', '');
+            
+            console.log(`Week: ${week}, Author: ${author}, Topic: ${topic}`);
+            
+            // README 읽기
+            let readme = fs.readFileSync('README.md', 'utf8');
+            
+            // 새 행 생성 (링크는 PR 링크로)
+            const newRow = `| ${week} | ${date} | ${author} | [${topic.trim()}](${pr.html_url}) | 🌊🌊 |`;
+            
+            // 테이블에 추가 (Dive Log 섹션 찾아서)
+            const tablePattern = /(## 📚 Dive Log[\s\S]*?\|[\s\S]*?\|[\s\S]*?\|[\s\S]*?\|[\s\S]*?\|[\s\S]*?\|)\n(\n|##)/;
+            
+            if (tablePattern.test(readme)) {
+              readme = readme.replace(tablePattern, `$1\n${newRow}\n$2`);
+              fs.writeFileSync('README.md', readme);
+              console.log('README 업데이트 완료');
+            } else {
+              console.log('테이블을 찾을 수 없음');
+            }
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git diff --staged --quiet || git commit -m "📊 발표 기록 자동 업데이트"
+          git push

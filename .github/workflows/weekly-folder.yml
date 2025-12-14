@@ -1,0 +1,55 @@
+name: Create Weekly Folder
+
+on:
+  schedule:
+    - cron: '0 0 * * SUN'  # 매주 일요일 09:00 KST (다음 주 준비)
+  workflow_dispatch:  # 수동 실행
+
+jobs:
+  create-folder:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create weekly folder
+        run: |
+          # 다음 화요일 날짜 계산
+          NEXT_TUESDAY=$(date -d "next tuesday" +%Y-%m-%d)
+          YEAR=$(date -d "next tuesday" +%Y)
+          WEEK=$(date -d "next tuesday" +%V)
+          DATE_SHORT=$(date -d "next tuesday" +%m-%d)
+          
+          FOLDER_PATH="${YEAR}/week${WEEK}-${DATE_SHORT}"
+          
+          mkdir -p "$FOLDER_PATH"
+          
+          cat > "$FOLDER_PATH/README.md" << EOF
+          # 🌊 Week ${WEEK} - ${NEXT_TUESDAY}
+
+          ## 이번 주 다이브
+
+          | Diver | Topic | Depth | Status |
+          |-------|-------|-------|--------|
+          | | | | ⏳ 준비중 |
+          | | | | ⏳ 준비중 |
+
+          ## 주요 논의 사항
+
+          - 
+
+          ## 다음 주 예정
+
+          | Diver | Topic |
+          |-------|-------|
+          | | |
+          EOF
+          
+          echo "📁 Created: $FOLDER_PATH"
+
+      - name: Commit and Push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --staged --quiet || git commit -m "🌊 Week $(date -d 'next tuesday' +%V) 폴더 생성"
+          git push

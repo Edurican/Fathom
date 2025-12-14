@@ -1,0 +1,57 @@
+name: Discord Notification
+
+on:
+  pull_request:
+    types: [opened, closed]
+  discussion:
+    types: [created]
+
+jobs:
+  notify-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: PR Opened
+        if: github.event.action == 'opened'
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          nodetail: true
+          title: "🌊 새 발표자료 등록"
+          description: |
+            **${{ github.actor }}**님이 다이브했습니다!
+            
+            📝 ${{ github.event.pull_request.title }}
+          color: 0x3498db
+          url: ${{ github.event.pull_request.html_url }}
+
+      - name: PR Merged
+        if: github.event.action == 'closed' && github.event.pull_request.merged
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          nodetail: true
+          title: "✅ 발표자료 머지 완료"
+          description: |
+            **${{ github.actor }}**님의 다이브가 기록되었습니다!
+            
+            📝 ${{ github.event.pull_request.title }}
+          color: 0x2ecc71
+          url: ${{ github.event.pull_request.html_url }}
+
+  notify-discussion:
+    if: github.event_name == 'discussion'
+    runs-on: ubuntu-latest
+    steps:
+      - name: New Discussion
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          nodetail: true
+          title: "💬 새 토론 등록"
+          description: |
+            **${{ github.actor }}**님이 토론을 시작했습니다!
+            
+            📝 ${{ github.event.discussion.title }}
+          color: 0x9b59b6
+          url: ${{ github.event.discussion.html_url }}
