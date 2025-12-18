@@ -1,37 +1,191 @@
-spring:
+# =============================================================================
+# 🏷️ Fathom Auto Labeler Configuration
+# =============================================================================
+# PR 생성 시 변경된 파일/폴더 이름을 기반으로 자동 라벨링합니다.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 📚 주제 카테고리 (Category)
+# -----------------------------------------------------------------------------
+"📚 Backend":
   - changed-files:
       - any-glob-to-any-file:
           - '**/*spring*/**'
           - '**/*Spring*/**'
-          - '**/*batch*/**'
           - '**/*jpa*/**'
+          - '**/*hibernate*/**'
+          - '**/*backend*/**'
+          - '**/*api*/**'
+          - '**/*rest*/**'
 
-redis:
+"📚 Frontend":
   - changed-files:
       - any-glob-to-any-file:
-          - '**/*redis*/**'
-          - '**/*Redis*/**'
-          - '**/*cache*/**'
+          - '**/*react*/**'
+          - '**/*vue*/**'
+          - '**/*angular*/**'
+          - '**/*frontend*/**'
+          - '**/*css*/**'
+          - '**/*javascript*/**'
+          - '**/*typescript*/**'
 
-kafka:
-  - changed-files:
-      - any-glob-to-any-file:
-          - '**/*kafka*/**'
-          - '**/*Kafka*/**'
-          - '**/*message*/**'
-
-database:
+"📚 Database":
   - changed-files:
       - any-glob-to-any-file:
           - '**/*mysql*/**'
           - '**/*postgresql*/**'
           - '**/*db*/**'
           - '**/*sql*/**'
+          - '**/*mongodb*/**'
+          - '**/*index*/**'
+          - '**/*query*/**'
 
-devops:
+"📚 Infra/DevOps":
   - changed-files:
       - any-glob-to-any-file:
           - '**/*docker*/**'
           - '**/*k8s*/**'
           - '**/*kubernetes*/**'
           - '**/*aws*/**'
+          - '**/*gcp*/**'
+          - '**/*azure*/**'
+          - '**/*ci*/**'
+          - '**/*cd*/**'
+          - '**/*deploy*/**'
+          - '**/*infra*/**'
+          - '**/*devops*/**'
+
+"📚 CS/OS":
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*os*/**'
+          - '**/*memory*/**'
+          - '**/*process*/**'
+          - '**/*thread*/**'
+          - '**/*cpu*/**'
+          - '**/*network*/**'
+          - '**/*algorithm*/**'
+          - '**/*data-structure*/**'
+
+"📚 Architecture":
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*msa*/**'
+          - '**/*microservice*/**'
+          - '**/*ddd*/**'
+          - '**/*clean*/**'
+          - '**/*hexagonal*/**'
+          - '**/*architecture*/**'
+          - '**/*design-pattern*/**'
+          - '**/*solid*/**'
+
+"📚 Security":
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*security*/**'
+          - '**/*auth*/**'
+          - '**/*oauth*/**'
+          - '**/*jwt*/**'
+          - '**/*encryption*/**'
+
+# -----------------------------------------------------------------------------
+# 🛠️ 기술 스택 (Tech Stack)
+# -----------------------------------------------------------------------------
+"🛠️ Spring":
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*spring*/**'
+          - '**/*Spring*/**'
+          - '**/*batch*/**'
+          - '**/*jpa*/**'
+          - '**/*webflux*/**'
+
+"🛠️ Redis":
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*redis*/**'
+          - '**/*Redis*/**'
+          - '**/*cache*/**'
+          - '**/*caching*/**'
+
+"🛠️ Kafka":
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*kafka*/**'
+          - '**/*Kafka*/**'
+          - '**/*message*/**'
+          - '**/*event*/**'
+          - '**/*mq*/**'
+
+"🛠️ Docker/K8s":
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*docker*/**'
+          - '**/*k8s*/**'
+          - '**/*kubernetes*/**'
+          - '**/*container*/**'
+
+"🛠️ Java":
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*java*/**'
+          - '**/*jvm*/**'
+          - '**/*gc*/**'
+          - '**/*concurrency*/**'
+
+"🛠️ Kotlin":
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*kotlin*/**'
+          - '**/*coroutine*/**'
+
+"🛠️ Python":
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*python*/**'
+          - '**/*django*/**'
+          - '**/*fastapi*/**'
+
+"🛠️ Testing":
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*test*/**'
+          - '**/*tdd*/**'
+          - '**/*junit*/**'
+          - '**/*mock*/**'
+
+# -----------------------------------------------------------------------------
+# 🌊 난이도 (Depth) - README 내용 기반으로는 자동 적용 어려움
+# 수동 라벨링 또는 PR 템플릿에서 선택하도록 유도
+# -----------------------------------------------------------------------------
+# "🌊 기초", "🌊🌊 중급", "🌊🌊🌊 심화"는 수동으로 추가
+
+# -----------------------------------------------------------------------------
+# 📁 문서 타입 (Document Type)
+# -----------------------------------------------------------------------------
+"📝 발표자료":
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/README.md'
+          - '**/*.pdf'
+      - all-globs-to-all-files:
+          - '!.github/**'
+          - '!templates/**'
+          - '!members/**'
+
+"❓ Q&A":
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/QnA.md'
+          - '**/qna.md'
+
+"👤 멤버":
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'members/**'
+
+"⚙️ 설정":
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/**'
+          - 'templates/**'
