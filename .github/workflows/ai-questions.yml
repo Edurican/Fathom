@@ -49,6 +49,9 @@ jobs:
       - name: Get presentation content
         id: content
         run: |
+          # Git 한글 경로 정상 출력 설정
+          git config core.quotepath false
+          
           # 디버깅: 변경된 파일 목록 출력
           echo "=== 변경된 파일 목록 ==="
           git diff --name-only origin/main HEAD
