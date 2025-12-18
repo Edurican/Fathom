@@ -49,8 +49,14 @@ jobs:
       - name: Get presentation content
         id: content
         run: |
+          # 디버깅: 변경된 파일 목록 출력
+          echo "=== 변경된 파일 목록 ==="
+          git diff --name-only origin/main HEAD
+          echo "========================"
+          
           # 변경된 README.md 중 발표자료 찾기
-          FILE=$(git diff --name-only origin/main HEAD | grep -E '^\d{4}/week.*/README.md$' | head -1)
+          # 패턴: YYYY/weekNN-MM-DD/발표자-주제/README.md
+          FILE=$(git diff --name-only origin/main HEAD | grep -E '^[0-9]{4}/week[0-9]+-[0-9]+-[0-9]+/.+/README\.md$' | head -1)
           
           if [ -z "$FILE" ]; then
             echo "발표자료 README 없음"
@@ -60,6 +66,7 @@ jobs:
           
           echo "found=true" >> $GITHUB_OUTPUT
           echo "file=$FILE" >> $GITHUB_OUTPUT
+          echo "발견된 파일: $FILE"
           
           # 내용 추출 (4000자 제한)
           CONTENT=$(head -c 4000 "$FILE")
