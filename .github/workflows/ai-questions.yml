@@ -22,7 +22,7 @@ name: AI Question Generator
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, reopened, synchronize]
     paths:
       - '**/README.md'
       - '!.github/**'
