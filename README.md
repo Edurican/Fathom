@@ -26,6 +26,7 @@
 | Week | Date | Diver | Topic | Depth |
 |------|------|-------|-------|-------|
 | 51 | 12-30 | 이관호 | [가상 메모리 발표자료 추가](https://github.com/Edurican/Fathom/pull/4) | 🌊🌊 |
+| 01 | 01-06 | 이관호 | [데드락 발표자료 추가](https://github.com/Edurican/Fathom/pull/7) | 🌊🌊 |
 
 > **Depth**: 🌊 기초 | 🌊🌊 중급 | 🌊🌊🌊 심화
 
